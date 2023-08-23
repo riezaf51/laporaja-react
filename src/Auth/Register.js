@@ -5,17 +5,6 @@ import routes from '../strings';
 import { useEffect, useState } from 'react';
 
 function Register() {
-    const [authenticated, setauthenticated] = useState();
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-            setauthenticated(loggedInUser);
-        }
-    }, []);
-
-    if (authenticated) {
-        return (<Navigate replace to={'/' + routes.dashboard} />)
-    }
 
     return (
         <section className="login d-flex ">

@@ -2,21 +2,11 @@ import '../Style/stylelanding.css'
 import { NavLink } from 'react-router-dom';
 import logo_header from '../Images/logo header.png'
 import routes from '../strings';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../App';
 
 function HomeNavbar() {
-    const [authenticated, setauthenticated] = useState();
-    const [user, setUser] = useState();
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        console.log(loggedInUser);
-        if (loggedInUser) {
-            const foundUser = JSON.parse(loggedInUser);
-            console.log(loggedInUser);
-            setUser(foundUser);
-            setauthenticated(loggedInUser);
-        }
-    }, []);
+    const { user, setUser } = useContext(AppContext);
 
     return (
         <section id="header">
@@ -27,11 +17,11 @@ function HomeNavbar() {
                     <li><NavLink to={routes.laporan}>Laporan</NavLink></li>
                     <li><NavLink to={routes.forum}>Forum</NavLink></li>
                     <li><NavLink to={routes.contact}>Kontak</NavLink></li>
-                    {user !== undefined && user.role == 'admin' &&
+                    {user && user.role == 'admin' &&
                         <li><NavLink to={'/' + routes.profile + '/' + routes.laporan}>Tanggapi</NavLink></li>
                     }
                     <li>|</li>
-                    {authenticated
+                    {user
                         ? <li><NavLink to={'/' + routes.profile}>Profile</NavLink></li>
                         :
                         <>

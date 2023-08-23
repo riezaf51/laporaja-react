@@ -1,20 +1,19 @@
 import '../Style/style.css'
 import logo_sidebar from '../Images/logo sidebar.png'
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import routes from '../strings';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../App';
 
 function ProfileNavbar() {
-    const [authenticated, setauthenticated] = useState(true);
+    const { user, setUser } = useContext(AppContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
+        setUser();
         localStorage.clear();
-        setauthenticated(false);
+        navigate(routes.root);
     };
-
-    if (!authenticated) {
-        return (<Navigate replace to={routes.root} />);
-    }
 
     require("../Style/styled.css");
     return (

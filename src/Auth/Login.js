@@ -2,21 +2,15 @@ import '../Style/style.css'
 import Carousel from './Carousel';
 import { Link, Navigate } from 'react-router-dom';
 import routes from '../strings';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppContext } from '../App';
 
 function Login() {
-    const [authenticated, setauthenticated] = useState();
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-            setauthenticated(loggedInUser);
-        }
-    }, []);
+    const { user, setUser } = useContext(AppContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState();
     const [button, setButton] = useState(false);
 
     const handleSubmit = async e => {
@@ -34,14 +28,13 @@ function Login() {
             // store the user in localStorage
             localStorage.setItem('user', JSON.stringify(response.data.data));
             console.log(response.data.data);
-            setauthenticated(true);
         } catch {
             console.log('fail');
         }
         setButton(false);
     };
 
-    if (authenticated) {
+    if (user) {
         return (
             <Navigate replace to={'/' + routes.dashboard} />
         );
