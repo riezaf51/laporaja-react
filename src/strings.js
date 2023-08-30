@@ -10,6 +10,7 @@ const routes = {
     edit: 'edit',
     add: 'tambah',
     profile: 'profile',
+    profile_user: 'user',
     profile_laporan: 'laporan'
 }
 

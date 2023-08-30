@@ -8,7 +8,7 @@ import { AppContext } from '../App';
 
 function Login() {
     const { user, setUser } = useContext(AppContext);
-
+    const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [button, setButton] = useState(false);
@@ -27,8 +27,10 @@ function Login() {
             setUser(response.data.data);
             // store the user in localStorage
             localStorage.setItem('user', JSON.stringify(response.data.data));
+            setError("");
             console.log(response.data.data);
         } catch {
+            setError("Email atau password salah!");
             console.log('fail');
         }
         setButton(false);
@@ -51,7 +53,9 @@ function Login() {
                                 Belum punya akun? <Link to={'/' + routes.register} className="d-inline text text-decoration-none">Daftar</Link>
                             </p>
                         </div>
+
                         <div className="login-form">
+
                             <form onSubmit={handleSubmit}>
                                 <input type="email" className="form-control" id="email" name="email" value={email} onChange={({ target }) => setEmail(target.value)} placeholder="Email" required />
 
@@ -64,6 +68,12 @@ function Login() {
                                 <Link to={'/' + routes.dashboard + '/' + routes.home} className="text-decoration-none d-flex justify-content-center">Masuk Sebagai Guest</Link>
                             </form>
                         </div>
+                        <br />
+                        {error &&
+                            <div class="alert alert-danger">
+                                {error}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
+import '../Style/styled.css'
+
 function ProfileLaporan() {
-    require("../Style/styled.css");
     return (
         <section id="interface">
 
@@ -78,8 +79,8 @@ function ProfileLaporan() {
                                 <h5>kecamatan</h5>
                             </td>
                             <td className="active"><p className="done">Selesai</p></td>
-                            <td className="active"><p className="not">Ditolak</p></td>
-                            <td className="active"><p className="prog">Progres</p></td>
+                            {/* <td className="active"><p className="not">Ditolak</p></td>
+                            <td className="active"><p className="prog">Progres</p></td> */}
                             <td className="edit"><a href="/profilelaporan/edit/{{$data->id}}">Edit</a></td>
                             <td className="delete"><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$data->id}}">Delete</a></td>
                             <div className="modal fade" id="exampleModal-{{$data->id}}" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

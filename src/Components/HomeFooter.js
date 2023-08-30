@@ -3,8 +3,8 @@ import logo_header from '../Images/logo header.png';
 
 function HomeFooter() {
     return (
-        <footer className="section-p1">
-            <div className="plus col">
+        <footer className="mt-5 section-p1" style={{ backgroundColor: "#A12520" }}>
+            <div className="plus col text-white">
                 <img className="logo" src={logo_header} alt="" />
                 <h4>Kontak</h4>
                 <p><strong>Alamat</strong> Gg. Desa Lengkong, Bojongsoang, Kabupaten Bandung</p>
@@ -14,10 +14,10 @@ function HomeFooter() {
                 <div className="follow">
                     <h4>Ikuti kami</h4>
                     <div className="icon">
-                        <i className="fab fa-facebook"></i>
-                        <i className="fab fa-twitter"></i>
-                        <i className="fab fa-instagram"></i>
-                        <i className="fab fa-youtube"></i>
+                        <i className="fab fa-facebook text-white"></i>
+                        <i className="fab fa-twitter text-white"></i>
+                        <i className="fab fa-instagram text-white"></i>
+                        <i className="fab fa-youtube text-white"></i>
                     </div>
                 </div>
             </div>

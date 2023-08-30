@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../Style/stylef.css'
+import loadingGif from '../../Images/loading.gif';
 
 function Forum() {
     const [data, setData] = useState([]);
@@ -25,15 +26,23 @@ function Forum() {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="container d-flex justify-content-center align-items-center" style={{ height: "400px" }}>
+                <img height="50px" src={loadingGif} alt="Loading..." />
+            </div>
+        );
     }
 
     if (!success) {
-        return <div>Problem occured while fetching data</div>;
+        return (
+            <div className="container d-flex justify-content-center align-items-center" style={{ height: "400px" }}>
+                Problem occured while fetching data
+            </div>
+        );
     }
 
     return (
-        <div className='row'>
+        <div className="row">
             <div className="container justify-content-center">
                 <div className="forum">
                     {data.data.map(item => (
@@ -50,7 +59,7 @@ function Forum() {
                                     <i className="fa-solid fa-arrows-spin"></i>
                                 }
                             </h3>
-                            <h3 className="alamat">{item.provinsi}</h3>
+                            <h3 className="alamat">{item.alamat + ', ' + item.kecamatan + ', ' + item.kabkota + ', ' + item.provinsi}</h3>
                             <h3 className="waktu">{item.created_at}</h3>
                         </div>
                     ))}

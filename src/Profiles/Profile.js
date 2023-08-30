@@ -1,10 +1,9 @@
 import { useContext } from "react";
 import { AppContext } from "../App";
+import '../Style/styled.css'
 
 function Profile() {
     const { user, setUser } = useContext(AppContext);
-
-    require("../Style/styled.css");
     return (
         <section id="interface">
             <h3 className="i-name">
@@ -14,38 +13,38 @@ function Profile() {
             <div className="info">
                 <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label">Nama</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" value={user.firstname + ' ' + user.lastname} />
                     </div>
                 </div>
 
                 <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label">Telepon</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" value={user.phonenumber} />
                     </div>
                 </div>
                 <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label">Provinsi</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" value={user.provinsi} />
                     </div>
                 </div>
                 <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label">Kota</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" value={user.kabkota} />
                     </div>
                 </div>
                 <div className="mb-3 row">
                     <label className="col-sm-2 col-form-label">Kecamatan</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" value={user.kecamatan} />
                     </div>
                 </div>
                 <div className="row">
                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-4">
                         <input type="text" readOnly className="form-control-plaintext" id="staticEmail" value={user.email} />
                     </div>
                 </div>

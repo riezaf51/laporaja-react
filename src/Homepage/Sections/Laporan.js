@@ -1,6 +1,59 @@
+import { useContext, useEffect, useState } from 'react';
 import '../../Style/style.css'
+import App, { AppContext } from '../../App';
+import axios from 'axios';
 
 function Laporan() {
+    const { user, setUser } = useContext(AppContext);
+    const [title, setTitle] = useState("");
+    const [address, setAddress] = useState("");
+    const [province, setProvince] = useState("");
+    const [kabkota, setKabkota] = useState("");
+    const [kecamatan, setKecamatan] = useState("");
+    const [description, setDescription] = useState("");
+    const [disable, setDisable] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    useEffect(() => {
+        if (user != undefined) {
+            setProvince(user.provinsi);
+            setKabkota(user.kabkota);
+            setKecamatan(user.kecamatan);
+        }
+    }, [user]);
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        setDisable(true);
+        const laporan = {
+            user_id: user.id,
+            judul: title,
+            alamat: address,
+            provinsi: province,
+            kabkota: kabkota,
+            kecamatan: kecamatan,
+            deskripsi: description
+        }
+        try {
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/laporan',
+                laporan
+            );
+            console.log(response);
+            setSuccess("Laporan berhasil dikirim!")
+            setTitle("");
+            setAddress("");
+            setProvince(user.provinsi);
+            setKabkota(user.kabkota);
+            setKecamatan(user.kecamatan);
+            setDescription("");
+        } catch {
+            console.log('fail');
+            setError("Terjadi kesalahan")
+        }
+        setDisable(false);
+    }
 
     return (
         <div>
@@ -9,24 +62,34 @@ function Laporan() {
             </section>
 
             <main className="px-3">
-                <form method="POST" action="/laporan" className="row g-3">
+                {error &&
+                    <div className="alert alert-danger">
+                        {error}
+                    </div>
+                }
+                {success &&
+                    <div className="alert alert-success">
+                        {success}
+                    </div>
+                }
+                <form method="POST" action="/laporan" className="row g-3" onSubmit={handleSubmit}>
                     <div className="col-12">
-                        <input type="text" className="form-control" name='judul' id="inputAddress" placeholder="Judul" required />
+                        <input type="text" className="form-control" value={title} onChange={({ target }) => setTitle(target.value)} name='judul' id="inputAddress" placeholder="Judul" required />
                     </div>
                     <div className="col-12">
-                        <input type="text" className="form-control" name='alamat' id="inputAddress2" placeholder="Alamat" required />
+                        <input type="text" className="form-control" value={address} onChange={({ target }) => setAddress(target.value)} name='alamat' id="inputAddress2" placeholder="Alamat" required />
                     </div>
 
 
                     <div className="col-md-4">
-                        <input type="text" className="form-control" name='provinsi' id="validationCustom01" placeholder="Provinsi" required />
+                        <input type="text" className="form-control" value={province} onChange={({ target }) => setProvince(target.value)} name='provinsi' id="validationCustom01" placeholder="Provinsi" required />
                     </div>
                     <div className="col-md-4">
-                        <input type="text" className="form-control" name='kabkota' id="validationCustom02" placeholder="Kab/Kota" required />
+                        <input type="text" className="form-control" value={kabkota} onChange={({ target }) => setKabkota(target.value)} name='kabkota' id="validationCustom02" placeholder="Kab/Kota" required />
                     </div>
                     <div className="col-md-4">
                         <div className="input-group has-validation">
-                            <input type="text" className="form-control" name='kecamatan' id="validationCustom02" placeholder="Kecamatan" required />
+                            <input type="text" className="form-control" value={kecamatan} onChange={({ target }) => setKecamatan(target.value)} name='kecamatan' id="validationCustom02" placeholder="Kecamatan" required />
                         </div>
                     </div>
 
@@ -35,7 +98,7 @@ function Laporan() {
                         <input type="text" className="form-control" id="inputAddress" placeholder="Nama Pelapor" />
                     </div> --> */}
                     <div className="form-floating">
-                        <textarea className="form-control" name='deskripsi' placeholder="Leave a comment here" id="floatingTextarea2" style={{ height: 100 + 'px' }} required></textarea>
+                        <textarea className="form-control" value={description} onChange={({ target }) => setDescription(target.value)} name='deskripsi' placeholder="Leave a comment here" id="floatingTextarea2" style={{ height: 100 + 'px' }} required />
                         <label htmlFor="floatingTextarea2">Deskripsi Laporan</label>
                     </div>
 
@@ -52,8 +115,8 @@ function Laporan() {
                         <label className="form-check-label" htmlFor="flexSwitchCheckChecked">Kirim sebagai Anonim</label>
                     </div> --> */}
 
-                    <div className="col-12">
-                        <button type="submit" className="btn btn-primary">Kirim</button>
+                    <div className="col-12 text-center">
+                        <button type="submit" disabled={disable} className="btn btn-primary">Kirim</button>
                     </div>
                 </form>
             </main>
