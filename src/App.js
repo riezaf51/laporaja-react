@@ -18,6 +18,7 @@ import ProfileLaporan from './Profiles/ProfileLaporan';
 import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute';
+import NotFound from './Components/NotFound';
 
 export const AppContext = createContext("");
 
@@ -65,6 +66,7 @@ function App() {
           </Route>
           <Route path={routes.login} element={<RedirectIfAuthenticated><Login /></RedirectIfAuthenticated>} />
           <Route path={routes.register} element={<RedirectIfAuthenticated><Register /></RedirectIfAuthenticated>} />
+          <Route path={'*'} element={<NotFound />} />
         </Routes>
       </AppContext.Provider>
     </div>

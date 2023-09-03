@@ -48,7 +48,7 @@ function Forum() {
                     {data.data.map(item => (
                         <div className="kiri">
                             {/* <h3 className="namauser">{item.judul}</h3> */}
-                            <h3 className="jenis">{item.judul}
+                            <h3 className="jenis text-truncate">{item.judul}
                                 {item.status == 'selesai' &&
                                     <i className="fa-solid fa-check"></i>
                                 }
@@ -59,8 +59,8 @@ function Forum() {
                                     <i className="fa-solid fa-arrows-spin"></i>
                                 }
                             </h3>
-                            <h3 className="alamat">{item.alamat + ', ' + item.kecamatan + ', ' + item.kabkota + ', ' + item.provinsi}</h3>
-                            <h3 className="waktu">{item.created_at}</h3>
+                            <h3 className="alamat text-truncate">{item.alamat + ', ' + item.kecamatan + ', ' + item.kabkota + ', ' + item.provinsi}</h3>
+                            <h3 className="waktu text-truncate">{item.created_at}</h3>
                         </div>
                     ))}
                     {/* <div className="kiri">
