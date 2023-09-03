@@ -11,11 +11,11 @@ function Login() {
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [button, setButton] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     const handleSubmit = async e => {
         e.preventDefault();
-        setButton(true);
+        setDisabled(true);
         const user = { email, password };
         // send the email and password to the server
         try {
@@ -32,8 +32,8 @@ function Login() {
         } catch {
             setError("Email atau password salah!");
             console.log('fail');
+            setDisabled(false);
         }
-        setButton(false);
     };
 
     if (user) {
@@ -57,12 +57,31 @@ function Login() {
                         <div className="login-form">
 
                             <form onSubmit={handleSubmit}>
-                                <input type="email" className="form-control" id="email" name="email" value={email} onChange={({ target }) => setEmail(target.value)} placeholder="Email" required />
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={({ target }) => setEmail(target.value)}
+                                    placeholder="Email"
+                                    required
+                                />
 
-                                <input type="password" className="form-control" id="password" name="password" value={password} onChange={({ target }) => setPassword(target.value)} placeholder="Kata sandi" required />
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={({ target }) => setPassword(target.value)}
+                                    placeholder="Kata sandi"
+                                    autoComplete="off"
+                                    required
+                                />
 
                                 <div className="masuk">
-                                    <button disabled={button} style={{ cursor: 'pointer' }} type="submit" className="btn btn-outline-secondary border-">Masuk</button>
+                                    <button disabled={disabled} style={{ cursor: 'pointer' }} type="submit" className="btn btn-outline-secondary border-">Masuk</button>
                                 </div>
 
                                 <Link to={'/' + routes.dashboard + '/' + routes.home} className="text-decoration-none d-flex justify-content-center">Masuk Sebagai Guest</Link>
@@ -70,7 +89,7 @@ function Login() {
                         </div>
                         <br />
                         {error &&
-                            <div class="alert alert-danger">
+                            <div className="alert alert-danger">
                                 {error}
                             </div>
                         }
