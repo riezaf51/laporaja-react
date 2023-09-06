@@ -2,8 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import HomeLayout from './Homepage/Layout';
 import ScrollToTop from './Components/ScrollToTop';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import routes from './strings';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { API_URL, routes } from './strings';
 import Login from './Auth/Login';
 import Register from './Auth/Register';
 import Contact from './Homepage/Sections/Contact';
@@ -19,23 +19,44 @@ import { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute';
 import NotFound from './Components/NotFound';
+import axios from 'axios';
+import Loading from './Components/Loading';
 
 export const AppContext = createContext("");
 
 function App() {
   const [user, setUser] = useState();
+  const [stateToken, setToken] = useState();
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    console.log(loggedInUser);
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      console.log(loggedInUser);
-      setUser(foundUser);
-    }
-    setLoading(false);
-  }, [loading, pathname]);
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      setToken(token);
+      if (token) {
+        const headers = { Authorization: 'Bearer ' + token };
+        console.log(headers);
+        const response = await axios.get(API_URL + '/api/user', { headers })
+          .then(res => {
+            console.log(res.data);
+            setUser(res.data);
+          })
+          .catch(function (error) {
+            if (error.response) {
+              localStorage.clear();
+              setUser();
+              setToken();
+              navigate('/' + routes.login);
+            }
+          });
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, [pathname]);
 
   const RedirectIfAuthenticated = ({ children }) => {
     if (user) {
@@ -44,9 +65,15 @@ function App() {
     return children;
   };
 
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <div className="App">
-      <AppContext.Provider value={{ user, setUser, loading }}>
+      <AppContext.Provider value={{ user, setUser, loading, stateToken, setToken }}>
         <ScrollToTop />
         <Routes>
           <Route index element={<Navigate to={'/' + routes.dashboard + '/' + routes.home} />} />

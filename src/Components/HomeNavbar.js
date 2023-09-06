@@ -1,7 +1,7 @@
 import '../Style/stylelanding.css'
 import { NavLink } from 'react-router-dom';
 import logo_header from '../Images/logo header.png'
-import routes from '../strings';
+import { routes } from '../strings';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
 

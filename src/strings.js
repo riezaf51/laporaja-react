@@ -1,4 +1,4 @@
-const routes = {
+export const routes = {
     root: '/',
     dashboard: 'dashboard',
     home: 'home',
@@ -14,4 +14,4 @@ const routes = {
     profile_laporan: 'laporan'
 }
 
-export default routes;
+export const API_URL = "http://127.0.0.1:8000";

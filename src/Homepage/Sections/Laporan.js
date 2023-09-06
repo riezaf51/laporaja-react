@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import '../../Style/style.css'
 import App, { AppContext } from '../../App';
 import axios from 'axios';
+import { API_URL } from '../../strings';
 
 function Laporan() {
     const { user, setUser } = useContext(AppContext);
@@ -37,7 +38,7 @@ function Laporan() {
         }
         try {
             const response = await axios.post(
-                'http://127.0.0.1:8000/api/laporan',
+                API_URL + '/api/laporan',
                 laporan
             );
             console.log(response);

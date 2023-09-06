@@ -3,9 +3,13 @@ import form from "../../Images/form.png"
 import phone from "../../Images/phone.png"
 import '../../Style/stylelanding.css';
 import { NavLink } from "react-router-dom";
-import routes from "../../strings";
+import { routes } from "../../strings";
+import { useContext } from "react";
+import { AppContext } from "../../App";
 
 function Home() {
+    const { user, setUser } = useContext(AppContext);
+
     return (
         <div>
             <section id="hero">
@@ -16,7 +20,10 @@ function Home() {
             <section id="product1" className="section-p1">
                 {/* <h2>Halo {{ Auth::user()->lastname }}, Silahkan Pilih Opsi Menu</h2>
                 @else */}
-                <h2>Halo Guest, Silahkan Pilih Opsi Menu</h2>
+                {user
+                    ? <h2>Halo {user.lastname}, Silahkan Pilih Opsi Menu</h2>
+                    : <h2>Halo Guest, Silahkan Pilih Opsi Menu</h2>
+                }
                 <p>Pilih sesuai dengan kebutuhan anda</p>
             </section>
 

@@ -1,6 +1,6 @@
 import '../../Style/style.css';
 import { Link } from 'react-router-dom';
-import routes from '../../strings';
+import { routes } from '../../strings';
 
 function AddContact() {
     return (

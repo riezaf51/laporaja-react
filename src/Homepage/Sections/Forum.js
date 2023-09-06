@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import '../../Style/stylef.css'
 import loadingGif from '../../Images/loading.gif';
+import Loading from '../../Components/Loading';
+import { API_URL } from '../../strings';
 
 function Forum() {
     const [data, setData] = useState([]);
@@ -13,7 +15,7 @@ function Forum() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/laporan');
+            const response = await fetch(API_URL + '/api/laporan');
             const jsonData = await response.json();
             setData(jsonData);
             setSuccess(true);
@@ -27,9 +29,7 @@ function Forum() {
 
     if (loading) {
         return (
-            <div className="container d-flex justify-content-center align-items-center" style={{ height: "400px" }}>
-                <img height="50px" src={loadingGif} alt="Loading..." />
-            </div>
+            <Loading />
         );
     }
 

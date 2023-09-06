@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../Images/logo header.png"
-import routes from "../strings";
+import { routes } from "../strings";
 
 function NotFound() {
     return (

@@ -1,7 +1,7 @@
 import '../Style/style.css'
 import Carousel from './Carousel';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import routes from '../strings';
+import { API_URL, routes } from '../strings';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -39,7 +39,7 @@ function Register() {
         }
         try {
             const response = await axios.post(
-                'http://127.0.0.1:8000/api/users', user
+                API_URL + '/api/users', user
             );
             console.log(response.data.data);
             navigate('/' + routes.login);

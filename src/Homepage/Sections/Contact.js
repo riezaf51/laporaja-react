@@ -1,7 +1,7 @@
 import '../../Style/stylef.css';
 import imgrs from '../../Images/imgrs.png';
 import imgfire from '../../Images/imgfire.png';
-import routes from '../../strings';
+import { routes } from '../../strings';
 import { Link } from 'react-router-dom';
 
 function Contact() {

@@ -1,18 +1,31 @@
 import '../Style/style.css'
 import logo_sidebar from '../Images/logo sidebar.png'
 import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
-import routes from '../strings';
+import { API_URL, routes } from '../strings';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
+import axios from 'axios';
 
 function ProfileNavbar() {
-    const { user, setUser } = useContext(AppContext);
+    const { user, setUser, stateToken, setToken } = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        setUser();
-        localStorage.clear();
-        navigate(routes.root);
+        const logout = async () => {
+            const headers = { Authorization: "Bearer " + stateToken };
+            const response = await axios.get(API_URL + '/api/logout', { headers })
+                .then(res => {
+                    setUser();
+                    setToken();
+                    localStorage.clear();
+                    navigate(routes.root);
+                    console.log(response)
+                }).catch(error => {
+                    console.log(error);
+                });
+        };
+
+        logout();
     };
 
     return (

@@ -1,17 +1,31 @@
 import '../Style/style.css'
 import Carousel from './Carousel';
 import { Link, Navigate } from 'react-router-dom';
-import routes from '../strings';
+import { API_URL, routes } from '../strings';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../App';
 
 function Login() {
-    const { user, setUser } = useContext(AppContext);
+    const { user, setUser, setToken } = useContext(AppContext);
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
+
+    // useEffect(() => {
+    //     const fetchCSRF = async () => {
+    //         const response = await axios.get(API_URL + '/sanctum/csrf-cookie')
+    //             .then(response => {
+    //                 setDisabled(false);
+    //                 console.log(response);
+    //             })
+    //             .catch(function (error) {
+    //                 setError("Gagal mengambil token")
+    //             });
+    //     };
+    //     fetchCSRF();
+    // }, [])
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -20,27 +34,23 @@ function Login() {
         // send the email and password to the server
         try {
             const response = await axios.post(
-                'http://127.0.0.1:8000/api/login',
+                API_URL + '/api/login',
                 user
             );
             // set the state of the user
-            setUser(response.data.data);
+
             // store the user in localStorage
-            localStorage.setItem('user', JSON.stringify(response.data.data));
+            localStorage.setItem('user_id', response.data.user_id);
+            localStorage.setItem('token', response.data.token);
+            setToken(response.data.token);
+            setUser(response.data.user);
             setError("");
-            console.log(response.data.data);
         } catch {
             setError("Email atau password salah!");
-            console.log('fail');
+            console.log("fail");
             setDisabled(false);
         }
     };
-
-    if (user) {
-        return (
-            <Navigate replace to={'/' + routes.dashboard} />
-        );
-    }
 
     return (
         <section className="login d-flex">
