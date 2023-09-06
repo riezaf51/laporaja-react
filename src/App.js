@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import HomeLayout from './Homepage/Layout';
 import ScrollToTop from './Components/ScrollToTop';
@@ -21,6 +20,8 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import NotFound from './Components/NotFound';
 import axios from 'axios';
 import Loading from './Components/Loading';
+import RedirectIfAuthenticated from './Components/RedirectIfAuthenticated';
+import ServerInactive from './Components/ServerInactive';
 
 export const AppContext = createContext("");
 
@@ -29,45 +30,57 @@ function App() {
   const [stateToken, setToken] = useState();
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
+  const [serverInactive, setServerInactive] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
-      setToken(token);
-      if (token) {
-        const headers = { Authorization: 'Bearer ' + token };
-        console.log(headers);
-        const response = await axios.get(API_URL + '/api/user', { headers })
-          .then(res => {
-            console.log(res.data);
-            setUser(res.data);
-          })
-          .catch(function (error) {
-            if (error.response) {
-              localStorage.clear();
-              setUser();
-              setToken();
-              navigate('/' + routes.login);
+
+      if (!token) {
+        await axios.get(API_URL + '/api/status')
+          .catch(error => {
+            if (error.request) {
+              setServerInactive(true);
             }
           });
+        setLoading(false);
+        return;
       }
+
+      setToken(token);
+      const headers = { Authorization: 'Bearer ' + token };
+      console.log(headers);
+      const response = await axios.get(API_URL + '/api/user', { headers })
+        .then(res => {
+          console.log(res.data);
+          setUser(res.data);
+        })
+        .catch(function (error) {
+          if (error.response) {
+            localStorage.clear();
+            setUser();
+            setToken();
+            navigate('/' + routes.login);
+          } else if (error.request) {
+            setServerInactive(true);
+          }
+        });
       setLoading(false);
     };
 
     fetchUser();
   }, [pathname]);
 
-  const RedirectIfAuthenticated = ({ children }) => {
-    if (user) {
-      return <Navigate replace to={routes.root} />;
-    }
-    return children;
-  };
-
   if (loading) {
     return (
       <Loading />
+    );
+  }
+
+  if (serverInactive) {
+    return (
+      <ServerInactive />
     );
   }
 

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { API_URL } from '../../strings';
 
 function Laporan() {
-    const { user, setUser } = useContext(AppContext);
+    const { user, setUser, stateToken } = useContext(AppContext);
     const [title, setTitle] = useState("");
     const [address, setAddress] = useState("");
     const [province, setProvince] = useState("");
@@ -37,9 +37,11 @@ function Laporan() {
             deskripsi: description
         }
         try {
+            const headers = { Authorization: "Bearer " + stateToken };
             const response = await axios.post(
                 API_URL + '/api/laporan',
-                laporan
+                laporan,
+                { headers }
             );
             console.log(response);
             setSuccess("Laporan berhasil dikirim!")

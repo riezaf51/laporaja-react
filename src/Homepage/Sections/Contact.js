@@ -43,7 +43,7 @@ function Contact() {
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
                                 <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#RS-1">Hapus Data</button>
                                 <p></p>
-                                <div className="modal fade" id="RS-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal fade" id="RS-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div className="modal-dialog">
                                         <div className="modal-content">
                                             <div className="modal-header">
@@ -76,7 +76,7 @@ function Contact() {
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
                                 <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Polsek-1">Hapus Data</button>
                                 <p></p>
-                                <div className="modal fade" id="Polsek-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal fade" id="Polsek-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div className="modal-dialog">
                                         <div className="modal-content">
                                             <div className="modal-header">
@@ -109,7 +109,7 @@ function Contact() {
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
                                 <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Pemadam-1">Hapus Data</button>
                                 <p></p>
-                                <div className="modal fade" id="Pemadam-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal fade" id="Pemadam-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div className="modal-dialog">
                                         <div className="modal-content">
                                             <div className="modal-header">

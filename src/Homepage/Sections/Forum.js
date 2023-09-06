@@ -48,7 +48,7 @@ function Forum() {
             <div className="container justify-content-center vh-100">
                 <div className="forum">
                     {data.data.map(item => (
-                        <div className="kiri" key={item.id}>
+                        <div className="kiri p-2" key={item.id}>
                             {/* <h3 className="namauser">{item.judul}</h3> */}
                             <h3 className="jenis text-truncate">{item.judul}
                                 {item.status == 'selesai' &&
