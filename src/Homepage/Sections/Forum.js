@@ -3,6 +3,7 @@ import '../../Style/stylef.css'
 import loadingGif from '../../Images/loading.gif';
 import Loading from '../../Components/Loading';
 import { API_URL } from '../../strings';
+import axios from 'axios';
 
 function Forum() {
     const [data, setData] = useState([]);
@@ -15,13 +16,14 @@ function Forum() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(API_URL + '/api/laporan');
-            const jsonData = await response.json();
+            const response = await axios.get(API_URL + '/api/laporan');
+            const jsonData = response.data
+            console.log(response.data);
             setData(jsonData);
             setSuccess(true);
             setLoading(false); // Set loading to false on error as well
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data: ' + error);
             setLoading(false); // Set loading to false on error as well
             // alert(error);
         }
@@ -43,7 +45,7 @@ function Forum() {
 
     return (
         <div className="row">
-            <div className="container justify-content-center">
+            <div className="container justify-content-center vh-100">
                 <div className="forum">
                     {data.data.map(item => (
                         <div className="kiri">
