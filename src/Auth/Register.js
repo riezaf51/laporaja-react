@@ -77,7 +77,7 @@ function Register() {
                                                 value={firstname}
                                                 onChange={({ target }) => setFirstname(target.value)}
                                             />
-                                            <label for="floatingInputGrid">Nama depan</label>
+                                            <label htmlFor="floatingInputGrid">Nama depan</label>
                                         </div>
                                     </div>
                                     <div className="col-md">
@@ -91,7 +91,7 @@ function Register() {
                                                 value={lastname}
                                                 onChange={({ target }) => setLastname(target.value)}
                                             />
-                                            <label for="floatingInputGrid">Nama belakang</label>
+                                            <label htmlFor="floatingInputGrid">Nama belakang</label>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@ function Register() {
                                                 value={province}
                                                 onChange={({ target }) => setProvince(target.value)}
                                             />
-                                            <label for="floatingInputGrid">Provinsi</label>
+                                            <label htmlFor="floatingInputGrid">Provinsi</label>
                                         </div>
                                     </div>
                                     <div className="col-md">
@@ -122,7 +122,7 @@ function Register() {
                                                 value={kabkota}
                                                 onChange={({ target }) => setKabkota(target.value)}
                                             />
-                                            <label for="floatingInputGrid">Kab/Kota</label>
+                                            <label htmlFor="floatingInputGrid">Kab/Kota</label>
                                         </div>
                                     </div>
                                     <div className="col-md">
@@ -136,7 +136,7 @@ function Register() {
                                                 value={kecamatan}
                                                 onChange={({ target }) => setKecamatan(target.value)}
                                             />
-                                            <label for="floatingInputGrid">Kecamatan</label>
+                                            <label htmlFor="floatingInputGrid">Kecamatan</label>
                                         </div>
                                     </div>
                                 </div>

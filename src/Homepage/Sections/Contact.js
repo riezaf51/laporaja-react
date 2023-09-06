@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function Contact() {
     return (
-        <div>
+        <div className='vh-100'>
             <section id="daftar">
                 {/* <!-- <div className="icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -36,8 +36,8 @@ function Contact() {
                         <div className="col">
                             <h4>namainstansi</h4>
                             {/* <!-- <h4>{{$data->namainstansi}}<i className="fa-solid fa-play"></i></h4> --> */}
-                            <h7>alamat</h7>
-                            <h7>nomortelepon</h7>
+                            <h6>alamat</h6>
+                            <h6>nomortelepon</h6>
                             <br />
                             <div>
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
@@ -69,8 +69,8 @@ function Contact() {
                         </div>
                         <div className="col">
                             <h4>namainstansi</h4>
-                            <h7>alamat</h7>
-                            <h7>nomortelepon</h7>
+                            <h6>alamat</h6>
+                            <h6>nomortelepon</h6>
                             <br />
                             <div>
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
@@ -102,8 +102,8 @@ function Contact() {
                         </div>
                         <div className="col">
                             <h4>namainstansi</h4>
-                            <h7>lamat</h7>
-                            <h7>nomortelepon</h7>
+                            <h6>lamat</h6>
+                            <h6>nomortelepon</h6>
                             <br />
                             <div>
                                 <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>

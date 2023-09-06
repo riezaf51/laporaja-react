@@ -57,7 +57,7 @@ function Laporan() {
     }
 
     return (
-        <div>
+        <div className='vh-100'>
             <section id="textsatu">
                 <h1>Tulis laporan kamu disini!</h1>
             </section>
