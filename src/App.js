@@ -37,7 +37,7 @@ function App() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) {
+      if (!token && !user) {
         await axios.get(API_URL + '/api/status')
           .catch(error => {
             if (error.request) {
@@ -51,7 +51,7 @@ function App() {
       setToken(token);
       const headers = { Authorization: 'Bearer ' + token };
       console.log(headers);
-      const response = await axios.get(API_URL + '/api/user', { headers })
+      await axios.get(API_URL + '/api/user', { headers })
         .then(res => {
           console.log(res.data);
           setUser(res.data);
@@ -70,7 +70,7 @@ function App() {
     };
 
     fetchUser();
-  }, [pathname]);
+  }, [pathname, navigate]);
 
   if (loading) {
     return (
@@ -86,7 +86,7 @@ function App() {
 
   return (
     <div className="App">
-      <AppContext.Provider value={{ user, setUser, loading, stateToken, setToken }}>
+      <AppContext.Provider value={{ user, setUser, loading, setLoading, stateToken, setToken }}>
         <ScrollToTop />
         <Routes>
           <Route index element={<Navigate to={'/' + routes.dashboard + '/' + routes.home} />} />

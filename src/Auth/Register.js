@@ -42,7 +42,7 @@ function Register() {
                 API_URL + '/api/users', user
             );
             console.log(response.data.data);
-            navigate('/' + routes.login);
+            navigate('/' + routes.login, { state: { message: 'sambo' } });
         } catch {
             setError("Terjadi kesalahan, silahkan coba lagi");
             setDisabled(false);

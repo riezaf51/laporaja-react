@@ -239,3 +239,13 @@ h4 {
     color: red;
     padding-left: 10px;
 }
+
+.forum .shadow-hover {
+    box-shadow: 0 2px 2px rgba(70, 62, 221, 0.1);
+    transition: .2s ease-out;
+}
+
+.forum .shadow-hover:hover {
+    box-shadow: 0 10px 20px rgba(70, 62, 221, 0.1);
+    transition: .2s ease-out
+}

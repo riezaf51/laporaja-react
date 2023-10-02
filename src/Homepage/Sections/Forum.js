@@ -4,6 +4,7 @@ import loadingGif from '../../Images/loading.gif';
 import Loading from '../../Components/Loading';
 import { API_URL } from '../../strings';
 import axios from 'axios';
+import ForumCard from '../../Components/ForumCard';
 
 function Forum() {
     const [data, setData] = useState([]);
@@ -44,49 +45,11 @@ function Forum() {
     }
 
     return (
-        <div className="row">
-            <div className="container justify-content-center vh-100">
-                <div className="forum">
-                    {data.data.map(item => (
-                        <div className="kiri p-2" key={item.id}>
-                            {/* <h3 className="namauser">{item.judul}</h3> */}
-                            <h3 className="jenis text-truncate">{item.judul}
-                                {item.status == 'selesai' &&
-                                    <i className="fa-solid fa-check"></i>
-                                }
-                                {item.status == 'ditolak' &&
-                                    <i className="fa-solid fa-xmark"></i>
-                                }
-                                {item.status == 'diproses' &&
-                                    <i className="fa-solid fa-arrows-spin"></i>
-                                }
-                            </h3>
-                            <h3 className="alamat text-truncate">{item.alamat + ', ' + item.kecamatan + ', ' + item.kabkota + ', ' + item.provinsi}</h3>
-                            <h3 className="waktu text-truncate">{item.created_at}</h3>
-                        </div>
-                    ))}
-                    {/* <div className="kiri">
-                        <h3 className="namauser">nama</h3>
-                        <h3 className="jenis">judul
-                            <i className="fa-solid fa-check"></i>
-                            <i className="fa-solid fa-xmark"></i>
-                            <i className="fa-solid fa-arrows-spin"></i>
-                        </h3>
-                        <h3 className="alamat">alamat</h3>
-                        <h3 className="waktu">tanggal</h3>
-                    </div> */}
-
-                    {/* <div className="kanan">
-                        <h3 className="namauser">nama</h3>
-                        <h3 className="jenis">judul
-                            <i className="fa-solid fa-check"></i>
-                            <i className="fa-solid fa-xmark"></i>
-                            <i className="fa-solid fa-arrows-spin"></i>
-                        </h3>
-                        <h3 className="alamat">alamat</h3>
-                        <h3 className="waktu">tanggal</h3>
-                    </div> */}
-                </div >
+        <div className="container justify-content-center vh-100">
+            <div className="forum">
+                {data.data.map(item => (
+                    <ForumCard item={item} />
+                ))}
             </div >
         </div >
     );

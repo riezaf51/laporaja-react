@@ -1,5 +1,4 @@
 import '../Style/style.css'
-import login1 from '../Images/loginimg.png'
 import login2 from '../Images/login2.jpg'
 import login3 from '../Images/login3.jpg'
 
@@ -9,9 +8,6 @@ function Carousel() {
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src={login1} className="d-block w-100" alt="..." />
-                    </div>
-                    <div className="carousel-item">
                         <img src={login2} className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">

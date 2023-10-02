@@ -7,11 +7,12 @@ import { AppContext } from '../App';
 import axios from 'axios';
 
 function ProfileNavbar() {
-    const { user, setUser, stateToken, setToken } = useContext(AppContext);
+    const { user, setUser, stateToken, setToken, setLoading } = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
         const logout = async () => {
+            setLoading(true)
             const headers = { Authorization: "Bearer " + stateToken };
             const response = await axios.get(API_URL + '/api/logout', { headers })
                 .then(res => {
@@ -23,6 +24,7 @@ function ProfileNavbar() {
                 }).catch(error => {
                     console.log(error);
                 });
+            setLoading(false);
         };
 
         logout();
