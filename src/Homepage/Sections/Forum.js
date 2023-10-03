@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import '../../Style/stylef.css'
-import loadingGif from '../../Images/loading.gif';
 import Loading from '../../Components/Loading';
 import { API_URL } from '../../strings';
 import axios from 'axios';
@@ -38,14 +37,14 @@ function Forum() {
 
     if (!success) {
         return (
-            <div className="container d-flex justify-content-center align-items-center" style={{ height: "400px" }}>
+            <div className="container d-flex justify-content-center align-items-center vh-100">
                 Problem occured while fetching data
             </div>
         );
     }
 
     return (
-        <div className="container justify-content-center vh-100">
+        <div className="container d-flex justify-content-center min-vh-100">
             <div className="forum">
                 {data.data.map(item => (
                     <ForumCard item={item} />

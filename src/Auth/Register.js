@@ -1,45 +1,38 @@
 import '../Style/style.css'
 import Carousel from './Carousel';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API_URL, routes } from '../strings';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 function Register() {
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [province, setProvince] = useState("");
-    const [kabkota, setKabkota] = useState("");
-    const [kecamatan, setKecamatan] = useState("");
-    const [phonenumber, setPhonenumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [inputs, setInputs] = useState({
+        firstname: "",
+        lastname: "",
+        provinsi: "",
+        kabkota: "",
+        kecamatan: "",
+        phonenumber: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
     const [disabled, setDisabled] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async e => {
+        console.log(inputs);
         e.preventDefault();
         setDisabled(true);
-        const user = {
-            firstname: firstname,
-            lastname: lastname,
-            provinsi: province,
-            kabkota: kabkota,
-            kecamatan: kecamatan,
-            phonenumber: phonenumber,
-            email: email,
-            password: password
-        };
-        if (password != confirmPassword) {
+        if (inputs.password !== inputs.confirmPassword) {
             setError("Password dan Konfirmasi Password tidak sama!");
             setDisabled(false);
             return;
         }
         try {
             const response = await axios.post(
-                API_URL + '/api/users', user
+                API_URL + '/api/users', inputs
             );
             console.log(response.data.data);
             navigate('/' + routes.login, { state: { message: 'sambo' } });
@@ -48,6 +41,13 @@ function Register() {
             setDisabled(false);
         }
     }
+
+    const handleChange = (e) => {
+        setInputs({
+            ...inputs,
+            [e.target.name]: e.target.value
+        });
+    };
 
     return (
         <section className="login d-flex ">
@@ -74,8 +74,8 @@ function Register() {
                                                 id="floatingInputGrid"
                                                 name="firstname"
                                                 required
-                                                value={firstname}
-                                                onChange={({ target }) => setFirstname(target.value)}
+                                                value={inputs.firstname}
+                                                onChange={handleChange}
                                             />
                                             <label htmlFor="floatingInputGrid">Nama depan</label>
                                         </div>
@@ -88,8 +88,8 @@ function Register() {
                                                 id="floatingInputGrid"
                                                 name="lastname"
                                                 required
-                                                value={lastname}
-                                                onChange={({ target }) => setLastname(target.value)}
+                                                value={inputs.lastname}
+                                                onChange={handleChange}
                                             />
                                             <label htmlFor="floatingInputGrid">Nama belakang</label>
                                         </div>
@@ -105,8 +105,8 @@ function Register() {
                                                 id="floatingInputGrid"
                                                 name="provinsi"
                                                 required
-                                                value={province}
-                                                onChange={({ target }) => setProvince(target.value)}
+                                                value={inputs.provinsi}
+                                                onChange={handleChange}
                                             />
                                             <label htmlFor="floatingInputGrid">Provinsi</label>
                                         </div>
@@ -119,8 +119,8 @@ function Register() {
                                                 id="floatingInputGrid"
                                                 name="kabkota"
                                                 required
-                                                value={kabkota}
-                                                onChange={({ target }) => setKabkota(target.value)}
+                                                value={inputs.kabkota}
+                                                onChange={handleChange}
                                             />
                                             <label htmlFor="floatingInputGrid">Kab/Kota</label>
                                         </div>
@@ -133,8 +133,8 @@ function Register() {
                                                 id="floatingInputGrid"
                                                 name="kecamatan"
                                                 required
-                                                value={kecamatan}
-                                                onChange={({ target }) => setKecamatan(target.value)}
+                                                value={inputs.kecamatan}
+                                                onChange={handleChange}
                                             />
                                             <label htmlFor="floatingInputGrid">Kecamatan</label>
                                         </div>
@@ -147,8 +147,8 @@ function Register() {
                                     id="hp" name="phonenumber"
                                     placeholder="Hp"
                                     required
-                                    value={phonenumber}
-                                    onChange={({ target }) => setPhonenumber(target.value)}
+                                    value={inputs.phonenumber}
+                                    onChange={handleChange}
                                 />
 
                                 <input
@@ -158,8 +158,8 @@ function Register() {
                                     name="email"
                                     placeholder="Email"
                                     required
-                                    value={email}
-                                    onChange={({ target }) => setEmail(target.value)}
+                                    value={inputs.email}
+                                    onChange={handleChange}
                                 />
 
                                 <input
@@ -170,8 +170,8 @@ function Register() {
                                     placeholder="Kata sandi"
                                     minLength="8"
                                     required
-                                    value={password}
-                                    onChange={({ target }) => setPassword(target.value)}
+                                    value={inputs.password}
+                                    onChange={handleChange}
                                     autoComplete="off"
                                 />
 
@@ -179,12 +179,12 @@ function Register() {
                                     type="password"
                                     className="form-control"
                                     id="confirmpassword"
-                                    name="confirmpassword"
+                                    name="confirmPassword"
                                     placeholder="Konfirmasi Kata sandi"
                                     minLength="8"
                                     required
-                                    value={confirmPassword}
-                                    onChange={({ target }) => setConfirmPassword(target.value)}
+                                    value={inputs.confirmPassword}
+                                    onChange={handleChange}
                                     autoComplete="off"
                                 />
 

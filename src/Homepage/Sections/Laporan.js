@@ -1,62 +1,70 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import '../../Style/style.css'
-import App, { AppContext } from '../../App';
+import { AppContext } from '../../App';
 import axios from 'axios';
 import { API_URL } from '../../strings';
 
 function Laporan() {
-    const { user, setUser, stateToken } = useContext(AppContext);
-    const [title, setTitle] = useState("");
-    const [address, setAddress] = useState("");
-    const [province, setProvince] = useState("");
-    const [kabkota, setKabkota] = useState("");
-    const [kecamatan, setKecamatan] = useState("");
-    const [description, setDescription] = useState("");
+    const { user, stateToken } = useContext(AppContext);
+    const [inputs, setInputs] = useState({
+        user_id: user.id,
+        judul: "",
+        alamat: "",
+        provinsi: user.provinsi,
+        kabkota: user.kabkota,
+        kecamatan: user.kecamatan,
+        deskripsi: "",
+    });
     const [disable, setDisable] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    useEffect(() => {
-        if (user != undefined) {
-            setProvince(user.provinsi);
-            setKabkota(user.kabkota);
-            setKecamatan(user.kecamatan);
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user != undefined) {
+    //         setProvince(user.provinsi);
+    //         setKabkota(user.kabkota);
+    //         setKecamatan(user.kecamatan);
+    //     }
+    // }, [user]);
 
     const handleSubmit = async e => {
         e.preventDefault();
         setDisable(true);
-        const laporan = {
-            user_id: user.id,
-            judul: title,
-            alamat: address,
-            provinsi: province,
-            kabkota: kabkota,
-            kecamatan: kecamatan,
-            deskripsi: description
-        }
         try {
             const headers = { Authorization: "Bearer " + stateToken };
             const response = await axios.post(
                 API_URL + '/api/laporan',
-                laporan,
+                inputs,
                 { headers }
             );
             console.log(response);
             setSuccess("Laporan berhasil dikirim!")
-            setTitle("");
-            setAddress("");
-            setProvince(user.provinsi);
-            setKabkota(user.kabkota);
-            setKecamatan(user.kecamatan);
-            setDescription("");
+            resetForm();
         } catch {
             console.log('fail');
             setError("Terjadi kesalahan")
         }
         setDisable(false);
     }
+
+    const handleChange = (e) => {
+        setInputs({
+            ...inputs,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const resetForm = () => {
+        setInputs({
+            user_id: user.id,
+            judul: "",
+            alamat: "",
+            provinsi: user.provinsi,
+            kabkota: user.kabkota,
+            kecamatan: user.kecamatan,
+            deskripsi: "",
+        });
+    };
 
     return (
         <div className='vh-100'>
@@ -77,22 +85,22 @@ function Laporan() {
                 }
                 <form method="POST" action="/laporan" className="row g-3" onSubmit={handleSubmit}>
                     <div className="col-12">
-                        <input type="text" className="form-control" value={title} onChange={({ target }) => setTitle(target.value)} name='judul' id="inputAddress" placeholder="Judul" required />
+                        <input type="text" className="form-control" value={inputs.judul} onChange={handleChange} name='judul' id="inputAddress" placeholder="Judul" required />
                     </div>
                     <div className="col-12">
-                        <input type="text" className="form-control" value={address} onChange={({ target }) => setAddress(target.value)} name='alamat' id="inputAddress2" placeholder="Alamat" required />
+                        <input type="text" className="form-control" value={inputs.alamat} onChange={handleChange} name='alamat' id="inputAddress2" placeholder="Alamat" required />
                     </div>
 
 
                     <div className="col-md-4">
-                        <input type="text" className="form-control" value={province} onChange={({ target }) => setProvince(target.value)} name='provinsi' id="validationCustom01" placeholder="Provinsi" required />
+                        <input type="text" className="form-control" value={inputs.provinsi} onChange={handleChange} name='provinsi' id="validationCustom01" placeholder="Provinsi" required />
                     </div>
                     <div className="col-md-4">
-                        <input type="text" className="form-control" value={kabkota} onChange={({ target }) => setKabkota(target.value)} name='kabkota' id="validationCustom02" placeholder="Kab/Kota" required />
+                        <input type="text" className="form-control" value={inputs.kabkota} onChange={handleChange} name='kabkota' id="validationCustom02" placeholder="Kab/Kota" required />
                     </div>
                     <div className="col-md-4">
                         <div className="input-group has-validation">
-                            <input type="text" className="form-control" value={kecamatan} onChange={({ target }) => setKecamatan(target.value)} name='kecamatan' id="validationCustom02" placeholder="Kecamatan" required />
+                            <input type="text" className="form-control" value={inputs.kecamatan} onChange={handleChange} name='kecamatan' id="validationCustom02" placeholder="Kecamatan" required />
                         </div>
                     </div>
 
@@ -101,7 +109,7 @@ function Laporan() {
                         <input type="text" className="form-control" id="inputAddress" placeholder="Nama Pelapor" />
                     </div> --> */}
                     <div className="form-floating">
-                        <textarea className="form-control" value={description} onChange={({ target }) => setDescription(target.value)} name='deskripsi' placeholder="Leave a comment here" id="floatingTextarea2" style={{ height: 100 + 'px' }} required />
+                        <textarea className="form-control" value={inputs.deskripsi} onChange={handleChange} name='deskripsi' placeholder="Leave a comment here" id="floatingTextarea2" style={{ height: 100 + 'px' }} required />
                         <label htmlFor="floatingTextarea2">Deskripsi Laporan</label>
                     </div>
 
