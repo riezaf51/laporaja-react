@@ -5,7 +5,7 @@ import { routes } from '../strings';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
 
-function HomeNavbar() {
+export default function HomeNavbar() {
     const { user, setUser } = useContext(AppContext);
 
     return (
@@ -33,6 +33,4 @@ function HomeNavbar() {
             </div>
         </section >
     )
-};
-
-export default HomeNavbar;
+}

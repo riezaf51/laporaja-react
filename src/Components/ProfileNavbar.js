@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
 import axios from 'axios';
 
-function ProfileNavbar() {
+export default function ProfileNavbar() {
     const { user, setUser, stateToken, setToken, setLoading } = useContext(AppContext);
     const navigate = useNavigate();
 
@@ -37,12 +37,10 @@ function ProfileNavbar() {
             </div>
 
             <div className="items">
-                <li><a className="fa-solid fa-circle-user"></a><NavLink to={routes.profile_user}>Profile</NavLink></li>
-                <li><a className="fa-solid fa-clipboard-list"></a><NavLink to={routes.laporan}>Laporan</NavLink></li>
-                <li><a className="fa-solid fa-right-from-bracket"></a><a onClick={handleLogout}>Keluar</a></li>
+                <li><a className="fa-solid fa-circle-user" /><NavLink to={routes.profile_user}>Profile</NavLink></li>
+                <li><a className="fa-solid fa-clipboard-list" /><NavLink to={routes.laporan}>Laporan</NavLink></li>
+                <li><a className="fa-solid fa-right-from-bracket" /><a onClick={handleLogout}>Keluar</a></li>
             </div>
         </section>
     );
 }
-
-export default ProfileNavbar;

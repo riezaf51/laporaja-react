@@ -1,12 +1,55 @@
 import '../../Style/stylef.css';
 import imgrs from '../../Images/imgrs.png';
 import imgfire from '../../Images/imgfire.png';
-import { routes } from '../../strings';
+import { API_URL, routes } from '../../strings';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import Loading from '../../Components/Loading';
+import ContactCard from '../../Components/ContactCard';
+import { AppContext } from '../../App';
 
-function Contact() {
+export default function Contact() {
+    const { user } = useContext(AppContext);
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(true);
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(API_URL + '/api/kontakpenting');
+                const jsonData = response.data
+                console.log(response.data);
+                setData(jsonData);
+                setSuccess(true);
+                setLoading(false); // Set loading to false on error as well
+            } catch (error) {
+                console.error('Error fetching data: ' + error);
+                setLoading(false); // Set loading to false on error as well
+                // alert(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <Loading />
+        );
+    }
+
+    if (!success) {
+        return (
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                Problem occured while fetching data
+            </div>
+        );
+    }
+
     return (
-        <div className='vh-100'>
+        <div className='min-vh-100'>
             <section id="daftar">
                 {/* <!-- <div className="icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -30,117 +73,43 @@ function Contact() {
             </section>
 
             <section id="main">
-
                 <div className="container">
                     <div className="row">
                         <div className="col">
-                            <h4>namainstansi</h4>
-                            {/* <!-- <h4>{{$data->namainstansi}}<i className="fa-solid fa-play"></i></h4> --> */}
-                            <h6>alamat</h6>
-                            <h6>nomortelepon</h6>
-                            <br />
-                            <div>
-                                <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
-                                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#RS-1">Hapus Data</button>
-                                <p></p>
-                                <div className="modal fade" id="RS-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h1 className="modal-title fs-5" id="exampleModalLabel">Hapus Data</h1>
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                Apakah anda yakin akan menghapus Rumah Sakit ini??
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <form id="delete-form-{{$data->id}}" action="{{route('kontak.delete', $data->id)}}" method="POST">
-                                                    <button type="submit" className="btn btn-danger">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {data.data
+                                .filter(item => (item.jenisinstansi === "Rumah Sakit"))
+                                .map(item => (<ContactCard item={item} />))
+                            }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
                         <h6>{{$data->nomortelepon}}</h6> --> */}
                         </div>
                         <div className="col">
-                            <h4>namainstansi</h4>
-                            <h6>alamat</h6>
-                            <h6>nomortelepon</h6>
-                            <br />
-                            <div>
-                                <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
-                                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Polsek-1">Hapus Data</button>
-                                <p></p>
-                                <div className="modal fade" id="Polsek-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h1 className="modal-title fs-5" id="exampleModalLabel">Hapus Data</h1>
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                Apakah anda yakin akan menghapus Kantor Polisi ini??
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <form id="delete-form-{{$data->id}}" action="{{route('kontak.delete', $data->id)}}" method="POST">
-                                                    <button type="submit" className="btn btn-danger">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {data.data
+                                .filter(item => (item.jenisinstansi === "Kantor Polisi"))
+                                .map(item => (<ContactCard item={item} />))
+                            }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
                         <h6>{{$data->nomortelepon}}</h6> --> */}
                         </div>
                         <div className="col">
-                            <h4>namainstansi</h4>
-                            <h6>lamat</h6>
-                            <h6>nomortelepon</h6>
-                            <br />
-                            <div>
-                                <Link to={routes.edit + '/1'}><button type="button" className="btn btn-outline-secondary">Ganti Data</button></Link>
-                                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Pemadam-1">Hapus Data</button>
-                                <p></p>
-                                <div className="modal fade" id="Pemadam-1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h1 className="modal-title fs-5" id="exampleModalLabel">Hapus Data</h1>
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                Apakah anda yakin akan menghapus Kantor Pemadam ini??
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <form id="delete-form-{{$data->id}}" action="{{route('kontak.delete', $data->id)}}" method="POST">
-                                                    <button type="submit" className="btn btn-danger">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {data.data
+                                .filter(item => (item.jenisinstansi === "Kantor Pemadam"))
+                                .map(item => (<ContactCard item={item} />))
+                            }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
                         <h6>{{$data->nomortelepon}}</h6> --> */}
                         </div>
                     </div>
                 </div>
-                <div className="plus col">
-                    <li><Link to={routes.add}><i className="fa-solid fa-plus"></i>Tambah Nomer Penting</Link></li>
-                </div>
+                {user && user.role === 'admin' &&
+                    <div className="plus col">
+                        <li><Link to={routes.add}><i className="fa-solid fa-plus"></i>Tambah Nomer Penting</Link></li>
+                    </div>
+                }
             </section>
         </div>
     );
 }
-
-export default Contact;

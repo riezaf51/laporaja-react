@@ -1,7 +1,7 @@
 import '../Style/stylelanding.css';
 import logo_header from '../Images/logo header.png';
 
-function HomeFooter() {
+export default function HomeFooter() {
     return (
         <footer className="mt-5 section-p1" style={{ backgroundColor: "#A12520" }}>
             <div className="plus col text-white">
@@ -24,5 +24,3 @@ function HomeFooter() {
         </footer>
     );
 }
-
-export default HomeFooter;

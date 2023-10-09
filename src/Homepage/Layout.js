@@ -2,7 +2,7 @@ import HomeNavbar from '../Components/HomeNavbar'
 import HomeFooter from '../Components/HomeFooter'
 import { Outlet } from 'react-router-dom'
 
-function HomeLayout() {
+export default function HomeLayout() {
     return (
         <div>
             <HomeNavbar />
@@ -11,5 +11,3 @@ function HomeLayout() {
         </div>
     )
 }
-
-export default HomeLayout;

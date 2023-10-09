@@ -5,7 +5,7 @@ import { API_URL, routes } from '../strings';
 import { useState } from 'react';
 import axios from 'axios';
 
-function Register() {
+export default function Register() {
     const [inputs, setInputs] = useState({
         firstname: "",
         lastname: "",
@@ -35,7 +35,7 @@ function Register() {
                 API_URL + '/api/users', inputs
             );
             console.log(response.data.data);
-            navigate('/' + routes.login, { state: { message: 'sambo' } });
+            navigate('/' + routes.login, { state: { message: 'Silahkan login dengan email yang sudah terdaftar!' } });
         } catch {
             setError("Terjadi kesalahan, silahkan coba lagi");
             setDisabled(false);
@@ -207,5 +207,3 @@ function Register() {
         </section >
     );
 }
-
-export default Register;

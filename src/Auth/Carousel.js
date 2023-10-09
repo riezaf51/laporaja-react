@@ -2,7 +2,7 @@ import '../Style/style.css'
 import login2 from '../Images/login2.jpg'
 import login3 from '../Images/login3.jpg'
 
-function Carousel() {
+export default function Carousel() {
     return (
         <div className="login-right w-50 h-100">
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
@@ -26,5 +26,3 @@ function Carousel() {
         </div>
     );
 }
-
-export default Carousel;

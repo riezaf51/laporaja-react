@@ -1,19 +1,22 @@
 import '../Style/style.css'
 import Carousel from './Carousel';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { API_URL, routes } from '../strings';
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../App';
 
-function Login() {
+export default function Login() {
+    const location = useLocation();
     const { setUser, setToken } = useContext(AppContext);
-    const [error, setError] = useState("");
+    const [error, setError] = useState((location.state) ? location.state.error : "");
+    const [success, setSuccess] = useState((location.state) ? location.state.message : "");
     const [disabled, setDisabled] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
     });
+    const navigate = useNavigate();
 
     // useEffect(() => {
     //     const fetchCSRF = async () => {
@@ -33,6 +36,7 @@ function Login() {
         e.preventDefault();
         setDisabled(true);
         // send the email and password to the server
+        setError("");
         try {
             const response = await axios.post(
                 API_URL + '/api/login',
@@ -46,7 +50,9 @@ function Login() {
             setToken(response.data.token);
             setUser(response.data.user);
             setError("");
+            navigate('/' + routes.dashboard + '/' + routes.home, { state: { message: 'Berhasil login!' } });
         } catch {
+            setSuccess("");
             setError("Email atau password salah!");
             console.log("fail");
             setDisabled(false);
@@ -111,6 +117,11 @@ function Login() {
                                 {error}
                             </div>
                         }
+                        {success &&
+                            <div className="alert alert-success">
+                                {success}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -118,5 +129,3 @@ function Login() {
         </section>
     );
 }
-
-export default Login;

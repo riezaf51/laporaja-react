@@ -5,7 +5,7 @@ import { API_URL } from '../../strings';
 import axios from 'axios';
 import ForumCard from '../../Components/ForumCard';
 
-function Forum() {
+export default function Forum() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
@@ -16,7 +16,7 @@ function Forum() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(API_URL + '/api/laporan');
+            const response = await axios.get(`${API_URL}/api/laporan`);
             const jsonData = response.data
             console.log(response.data);
             setData(jsonData);
@@ -53,5 +53,3 @@ function Forum() {
         </div >
     );
 }
-
-export default Forum;

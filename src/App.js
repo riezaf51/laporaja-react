@@ -22,10 +22,11 @@ import axios from 'axios';
 import Loading from './Components/Loading';
 import RedirectIfAuthenticated from './Components/RedirectIfAuthenticated';
 import ServerInactive from './Components/ServerInactive';
+import ForumDetails from './Homepage/Sections/ForumDetails';
 
 export const AppContext = createContext("");
 
-function App() {
+export default function App() {
   const [user, setUser] = useState();
   const [stateToken, setToken] = useState();
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ function App() {
             localStorage.clear();
             setUser();
             setToken();
-            navigate('/' + routes.login);
+            navigate('/' + routes.login, { state: { error: "Silahkan login kembali!" } });
           } else if (error.request) {
             setServerInactive(true);
           }
@@ -97,6 +98,7 @@ function App() {
             <Route path={routes.contact + '/edit/:id'} element={<EditContact />} />
             <Route path={routes.contact + '/tambah'} element={<AddContact />} />
             <Route path={routes.forum} element={<Forum />} />
+            <Route path={routes.forum + '/:id'} element={<ForumDetails />} />
             <Route path={routes.laporan} element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
           </Route>
           <Route path={routes.profile} element={<ProtectedRoute><ProfileLayout /></ProtectedRoute>}>
@@ -112,5 +114,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

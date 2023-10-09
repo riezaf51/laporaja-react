@@ -1,6 +1,6 @@
 import '../Style/styled.css'
 
-function ProfileLaporan() {
+export default function ProfileLaporan() {
     return (
         <section id="interface">
 
@@ -140,5 +140,3 @@ function ProfileLaporan() {
         </section>
     );
 }
-
-export default ProfileLaporan;

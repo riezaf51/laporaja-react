@@ -2,7 +2,7 @@ import '../../Style/style.css';
 import { Link } from 'react-router-dom';
 import { routes } from '../../strings';
 
-function EditContact() {
+export default function EditContact() {
     return (
         <div>
             <section id="textsatu">
@@ -37,5 +37,3 @@ function EditContact() {
         </div >
     );
 }
-
-export default EditContact;

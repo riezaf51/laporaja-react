@@ -2,16 +2,22 @@ import write2 from "../../Images/write2.png"
 import form from "../../Images/form.png"
 import phone from "../../Images/phone.png"
 import '../../Style/stylelanding.css';
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { routes } from "../../strings";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../App";
 
-function Home() {
-    const { user, setUser } = useContext(AppContext);
-
+export default function Home() {
+    const location = useLocation();
+    const { user } = useContext(AppContext);
+    const [success] = useState((location.state) ? location.state.message : "");
     return (
         <div>
+            {success &&
+                <div className="alert alert-success">
+                    {success}
+                </div>
+            }
             <section id="hero">
                 <h2>Pengaduan Online Masyarakat</h2>
                 <p>Sampaikan laporan anda langsung mengenai keresahan anda</p>
@@ -46,5 +52,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

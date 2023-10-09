@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 import axios from 'axios';
 import { API_URL } from '../../strings';
 
-function Laporan() {
+export default function Laporan() {
     const { user, stateToken } = useContext(AppContext);
     const [inputs, setInputs] = useState({
         user_id: user.id,
@@ -134,5 +134,3 @@ function Laporan() {
         </div>
     );
 }
-
-export default Laporan;

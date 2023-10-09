@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 import '../Style/styled.css'
 
-function Profile() {
-    const { user, setUser } = useContext(AppContext);
+export default function Profile() {
+    const { user } = useContext(AppContext);
     return (
         <section id="interface">
             <h3 className="i-name">
@@ -79,5 +79,3 @@ function Profile() {
         </section>
     );
 }
-
-export default Profile;
