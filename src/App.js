@@ -71,7 +71,7 @@ export default function App() {
     };
 
     fetchUser();
-  }, [pathname, navigate]);
+  }, [pathname]);
 
   if (loading) {
     return (
@@ -95,8 +95,8 @@ export default function App() {
           <Route path={routes.dashboard} element={<HomeLayout />}>
             <Route path={routes.home} element={<Home />} />
             <Route path={routes.contact} element={<Contact />} />
-            <Route path={routes.contact + '/edit/:id'} element={<EditContact />} />
-            <Route path={routes.contact + '/tambah'} element={<AddContact />} />
+            <Route path={routes.contact + '/edit/:id'} element={<ProtectedRoute><EditContact /></ProtectedRoute>} />
+            <Route path={routes.contact + '/tambah'} element={<ProtectedRoute><AddContact /></ProtectedRoute>} />
             <Route path={routes.forum} element={<Forum />} />
             <Route path={routes.forum + '/:id'} element={<ForumDetails />} />
             <Route path={routes.laporan} element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
