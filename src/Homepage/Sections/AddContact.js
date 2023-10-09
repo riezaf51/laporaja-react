@@ -40,6 +40,7 @@ export default function AddContact() {
         } catch {
             console.log('fail');
             setError("Terjadi kesalahan")
+            setSuccess();
         }
         setDisabled(false);
     }

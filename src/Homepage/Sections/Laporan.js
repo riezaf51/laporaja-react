@@ -39,10 +39,12 @@ export default function Laporan() {
             );
             console.log(response);
             setSuccess("Laporan berhasil dikirim!")
+            setError();
             resetForm();
         } catch {
             console.log('fail');
             setError("Terjadi kesalahan")
+            setSuccess();
         }
         setDisable(false);
     }
