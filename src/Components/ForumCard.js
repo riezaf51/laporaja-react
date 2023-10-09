@@ -6,7 +6,7 @@ export default function ForumCard({ item }) {
     return (
         <Link to={`/${routes.dashboard}/${routes.forum}/${item.id}`} >
             <div className="card kiri p-3 m-2 shadow-hover" key={item.id}>
-                {/* <h3 className="namauser">{item.judul}</h3> */}
+                <h3 className="namauser text-truncate">{`${item.user.firstname} ${item.user.lastname}`}</h3>
                 <h3 className="jenis text-truncate">{item.judul}
                     {item.status === 'selesai' &&
                         <i className="fa-solid fa-check"></i>

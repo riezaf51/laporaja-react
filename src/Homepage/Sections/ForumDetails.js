@@ -19,16 +19,15 @@ export default function ForumDetails() {
                 console.log(response.data);
                 setData(jsonData);
                 setSuccess(true);
-                setLoading(false); // Set loading to false on error as well
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data: ' + error);
-                setLoading(false); // Set loading to false on error as well
-                // alert(error);
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [id]);
 
     if (loading) {
         return (
@@ -56,10 +55,10 @@ export default function ForumDetails() {
                 {data.status === "selesai" &&
                     <h1 className='text-success'>Selesai</h1>
                 }
-
             </section>
 
             <main className="px-3">
+                <h6>Dilaporkan oleh: {data.user.firstname} {data.user.lastname}</h6>
                 <form className="row g-3">
                     <div className="col-12">
                         <input type="text" readOnly className="form-control" value={data.judul} name='judul' id="inputAddress" placeholder="Judul" required />
