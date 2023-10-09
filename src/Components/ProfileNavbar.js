@@ -1,8 +1,8 @@
 import '../Style/style.css'
 import logo_sidebar from '../Images/logo sidebar.png'
-import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { API_URL, routes } from '../strings';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../App';
 import axios from 'axios';
 
@@ -25,6 +25,7 @@ export default function ProfileNavbar() {
                     console.log(error);
                 });
             setLoading(false);
+            navigate('/' + routes.dashboard + '/' + routes.home, { state: { message: 'Berhasil logout!' } })
         };
 
         logout();
