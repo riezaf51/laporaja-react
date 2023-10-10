@@ -11,8 +11,14 @@ export default function Home() {
     const location = useLocation();
     const { user } = useContext(AppContext);
     const [success] = useState((location.state) ? location.state.message : "");
+    const [error] = useState((location.state) ? location.state.error : "");
     return (
         <div>
+            {error &&
+                <div className="alert alert-danger">
+                    {error}
+                </div>
+            }
             {success &&
                 <div className="alert alert-success">
                     {success}
