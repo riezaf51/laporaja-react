@@ -18,7 +18,7 @@ export default function HomeNavbar() {
                     <li><NavLink to={routes.forum}>Forum</NavLink></li>
                     <li><NavLink to={routes.contact}>Kontak</NavLink></li>
                     {user && user.role === 'admin' &&
-                        <li><NavLink to={'/' + routes.profile + '/' + routes.laporan}>Tanggapi</NavLink></li>
+                        <li><NavLink to={'/' + routes.profile + '/' + routes.profile_tanggapi}>Tanggapi</NavLink></li>
                     }
                     <li>|</li>
                     {user

@@ -19,13 +19,12 @@ export default function ProfileNavbar() {
                     setUser();
                     setToken();
                     localStorage.clear();
-                    navigate(routes.root);
+                    navigate('/' + routes.dashboard + '/' + routes.home, { state: { message: 'Berhasil logout!' } })
                     console.log(response)
                 }).catch(error => {
                     console.log(error);
                 });
             setLoading(false);
-            navigate('/' + routes.dashboard + '/' + routes.home, { state: { message: 'Berhasil logout!' } })
         };
 
         logout();
@@ -39,7 +38,10 @@ export default function ProfileNavbar() {
 
             <div className="items">
                 <li><a className="fa-solid fa-circle-user" /><NavLink to={routes.profile_user}>Profile</NavLink></li>
-                <li><a className="fa-solid fa-clipboard-list" /><NavLink to={routes.laporan}>Laporan</NavLink></li>
+                <li><a className="fa-solid fa-clipboard-list" /><NavLink to={routes.profile_laporan}>Laporan</NavLink></li>
+                {user.role === 'admin' &&
+                    <li><a className="fa-solid fa-flag" /><NavLink to={routes.profile_tanggapi}>Tanggapi</NavLink></li>
+                }
                 <li><a className="fa-solid fa-right-from-bracket" /><a onClick={handleLogout}>Keluar</a></li>
             </div>
         </section>
