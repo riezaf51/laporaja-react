@@ -59,6 +59,9 @@ export default function ForumDetails() {
 
             <main className="px-3">
                 <h6>Dilaporkan oleh: {data.user.firstname} {data.user.lastname}</h6>
+                {data.admin &&
+                    <h6>Ditanggapi oleh: {data.user.firstname} {data.user.lastname}</h6>
+                }
                 <form className="row g-3">
                     <div className="col-12">
                         <input type="text" readOnly className="form-control" value={data.judul} name='judul' id="inputAddress" placeholder="Judul" required />
