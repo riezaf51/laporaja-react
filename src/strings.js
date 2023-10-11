@@ -11,7 +11,9 @@ export const routes = {
     add: 'tambah',
     profile: 'profile',
     profile_user: 'user',
-    profile_laporan: 'laporan'
+    profile_edit: 'edit',
+    profile_laporan: 'laporan',
+    profile_tanggapi: 'tanggapi',
 }
 
 export const API_URL = "http://18.140.126.119:8000";

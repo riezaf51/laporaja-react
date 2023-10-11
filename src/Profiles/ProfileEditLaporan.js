@@ -17,6 +17,7 @@ export default function ProfileEditLaporan() {
     const [inputs, setInputs] = useState({
         admin_id: user.id,
         status: "",
+        tanggapan: "",
     });
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export default function ProfileEditLaporan() {
                     setInputs({
                         ...inputs,
                         status: res.data.status,
+                        tanggapan: res.data.tanggapan,
                     });
                     console.log(res.data);
                 })
@@ -47,6 +49,7 @@ export default function ProfileEditLaporan() {
         const headers = {
             Authorization: `Bearer ${stateToken}`,
         }
+        console.log(inputs);
         await axios.put(`${API_URL}/api/laporan/${id}`,
             inputs,
             { headers }
@@ -161,6 +164,10 @@ export default function ProfileEditLaporan() {
                         < label className="form-check-label" for="flexRadioDefault3">
                             Selesai
                         </label>
+                    </div>
+                    <div className="col-5">
+                        <h4 className="mt-3"><b>Tanggapan</b></h4>
+                        <textarea type="text" name="tanggapan" className="form-control" id="inputFeedback" value={inputs.tanggapan} onChange={handleChange} />
                     </div>
                 </div>
                 <Link to={'/' + routes.profile + '/' + routes.profile_tanggapi}><button type="button" className="btn btn-outline-secondary">Batal</button></Link>
