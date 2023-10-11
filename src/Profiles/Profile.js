@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { AppContext } from "../App";
 import '../Style/styled.css'
+import { Link } from "react-router-dom";
+import { routes } from "../strings";
 
 export default function Profile() {
     const { user } = useContext(AppContext);
@@ -52,7 +54,7 @@ export default function Profile() {
             </div>
 
             <div>
-                <a href="/akun/ubahemail/{{$user->id}}"><button type="button" className="btn btn-outline-secondary">Ganti Email</button></a>
+                <Link to={'/' + routes.profile + '/' + routes.edit}><button type="button" className="btn btn-outline-secondary">Ganti Email</button></Link>
                 <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus-{{$user->id}}">Hapus Akun</button>
             </div>
 
