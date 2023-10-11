@@ -29,32 +29,31 @@ export default function ProfileLaporan({ forAdmin = false }) {
                     </div>
                 </div>
 
-                <div className="profile">
-                    <i className="far fa-bell"></i>
+                <div className="n1">
+                    <div className="uptask">
+                        <div className="uptaskspace">
+                            <h4><Link to="" className={!type ? "active" : ""} onClick={() => changeType('')}><small><b>Semua Laporan</b></small></Link></h4>
+                        </div>
+
+                        <div className="uptaskspace">
+                            <h4><Link to="?jenis=diproses" className={type === "diproses" ? "active" : ""} onClick={() => changeType('diproses')}><small><b>Progres</b></small></Link></h4>
+                        </div>
+
+                        <div className="uptaskspace">
+                            <h4><Link to="?jenis=ditolak" className={type === "ditolak" ? "active" : ""} onClick={() => changeType('ditolak')}><small><b>Ditolak</b></small></Link></h4>
+                        </div>
+
+                        <div className="uptaskspace">
+                            <h4><Link to="?jenis=selesai" className={type === "selesai" ? "active" : ""} onClick={() => changeType('selesai')}><small><b>Selesai</b></small></Link></h4>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
-            < h3 className="i-name" >
+            < h3 className="i-name mb-5" >
                 Laporan
             </h3 >
-
-            <div className="uptask">
-                <div className="uptaskspace">
-                    <h4><Link to="" className={!type ? "active" : ""} onClick={() => changeType('')}><small><b>Semua Laporan</b></small></Link></h4>
-                </div>
-
-                <div className="uptaskspace">
-                    <h4><Link to="?jenis=diproses" className={type === "diproses" ? "active" : ""} onClick={() => changeType('diproses')}><small><b>Progres</b></small></Link></h4>
-                </div>
-
-                <div className="uptaskspace">
-                    <h4><Link to="?jenis=ditolak" className={type === "ditolak" ? "active" : ""} onClick={() => changeType('ditolak')}><small><b>Ditolak</b></small></Link></h4>
-                </div>
-
-                <div className="uptaskspace">
-                    <h4><Link to="?jenis=selesai" className={type === "selesai" ? "active" : ""} onClick={() => changeType('selesai')}><small><b>Selesai</b></small></Link></h4>
-                </div>
-            </div>
 
             <ProfileLaporanTable type={type} forAdmin={forAdmin} search={search.toLowerCase()} />
         </section >

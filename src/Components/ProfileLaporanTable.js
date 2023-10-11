@@ -4,12 +4,18 @@ import { AppContext } from "../App";
 import axios from "axios";
 import { API_URL } from "../strings";
 import ProfileLaporanTableRow from "./ProfileLaporanTableRow";
+import NoData from "./NoData";
 
 export default function ProfileLaporanTable({ type, forAdmin = false, search = "" }) {
     const { user } = useContext(AppContext);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
+    const [refresh, setRefresh] = useState(true);
+
+    const handleRefresh = bool => {
+        setRefresh(bool);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,14 +39,28 @@ export default function ProfileLaporanTable({ type, forAdmin = false, search = "
                     console.error(error);
                 });
             setLoading(false);
+            setRefresh(false);
         }
+        if (refresh) {
+            fetchData();
+        }
+    }, [refresh])
 
-        fetchData();
-    }, [])
+    const performFilter = (data) => {
+        return data.data.filter((item => (item.status === type || !type) && (
+            item.judul.toLowerCase().includes(search) ||
+            item.deskripsi.toLowerCase().includes(search) ||
+            item.alamat.toLowerCase().includes(search) ||
+            item.provinsi.toLowerCase().includes(search) ||
+            item.kabkota.toLowerCase().includes(search) ||
+            item.kecamatan.toLowerCase().includes(search) ||
+            `${item.user.firstname} ${item.user.lastname}`.toLowerCase().includes(search)
+        )))
+    }
 
     if (loading) {
         return (
-            <Loading />
+            <Loading padded={false} />
         );
     }
 
@@ -67,21 +87,15 @@ export default function ProfileLaporanTable({ type, forAdmin = false, search = "
                     </tr>
                 </thead>
                 <tbody>
-                    {data.data
-                        .filter((item => (item.status === type || !type) && (
-                            item.judul.toLowerCase().includes(search) ||
-                            item.deskripsi.toLowerCase().includes(search) ||
-                            item.alamat.toLowerCase().includes(search) ||
-                            item.provinsi.toLowerCase().includes(search) ||
-                            item.kabkota.toLowerCase().includes(search) ||
-                            item.kecamatan.toLowerCase().includes(search) ||
-                            `${item.user.firstname} ${item.user.lastname}`.toLowerCase().includes(search)
-                        )))
+                    {performFilter(data)
                         .map(
-                            item => (<ProfileLaporanTableRow item={item} />)
+                            item => (<ProfileLaporanTableRow item={item} forAdmin={forAdmin} refreshHandler={handleRefresh} />)
                         )}
                 </tbody>
             </table>
+            {performFilter(data).length === 0 &&
+                <NoData padded={false} />
+            }
         </div>
     );
 }

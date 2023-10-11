@@ -24,6 +24,8 @@ import RedirectIfAuthenticated from './Components/RedirectIfAuthenticated';
 import ServerInactive from './Components/ServerInactive';
 import ForumDetails from './Homepage/Sections/ForumDetails';
 import AdminRoute from './Components/AdminRoute';
+import ProfileEditLaporan from './Profiles/ProfileEditLaporan';
+import ProfileEdit from './Profiles/ProfileEdit';
 
 export const AppContext = createContext("");
 
@@ -107,6 +109,8 @@ export default function App() {
             <Route path={routes.profile_user} element={<Profile />} />
             <Route path={routes.profile_laporan} element={<ProfileLaporan />} />
             <Route path={routes.profile_tanggapi} element={<AdminRoute><ProfileLaporan forAdmin={true} /></AdminRoute>} />
+            <Route path={routes.profile_tanggapi + '/:id'} element={<AdminRoute><ProfileEditLaporan /></AdminRoute>} />
+            <Route path={routes.profile_edit} element={<ProfileEdit />} />
           </Route>
           <Route path={routes.login} element={<RedirectIfAuthenticated><Login /></RedirectIfAuthenticated>} />
           <Route path={routes.register} element={<RedirectIfAuthenticated><Register /></RedirectIfAuthenticated>} />

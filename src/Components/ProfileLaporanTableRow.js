@@ -1,7 +1,28 @@
 import { Link } from "react-router-dom";
-import { routes } from "../strings";
+import { API_URL, routes } from "../strings";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { AppContext } from "../App";
 
-export default function ProfileLaporanTableRow({ item }) {
+export default function ProfileLaporanTableRow({ item, forAdmin = false, refreshHandler }) {
+    const { stateToken } = useContext(AppContext);
+    const [disabled, setDisabled] = useState(false);
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        setDisabled(true);
+        const headers = { Authorization: `Bearer ${stateToken}` }
+        await axios.delete(`${API_URL}/api/laporan/${item.id}`, { headers })
+            .then(res => {
+                refreshHandler(true);
+            })
+            .catch(error => {
+                setDisabled(false);
+                console.error(error);
+            });
+        console.log(e.target);
+    };
+
     return (
         <tr>
             <td className="people">
@@ -34,7 +55,9 @@ export default function ProfileLaporanTableRow({ item }) {
             {item.status === "diproses" &&
                 <td className="active"><p className="prog">Progres</p></td>
             }
-            <td className="edit"><Link to={'/' + routes.profile + '/' + routes.profile_laporan + '/' + routes.edit + '/' + item.id}>Edit</Link></td>
+            {forAdmin &&
+                < td className="edit"><Link to={'/' + routes.profile + '/' + routes.profile_tanggapi + '/' + item.id}>Tanggapi</Link></td>
+            }
             <td className="delete"><a href="#" data-bs-toggle="modal" data-bs-target={`#exampleModal-${item.id}`}>Delete</a></td>
             <div className="modal fade" id={`exampleModal-${item.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -48,8 +71,8 @@ export default function ProfileLaporanTableRow({ item }) {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <form id={`delete-form-${item.id}`} method="POST">
-                                <button type="submit" className="btn btn-danger">Hapus</button>
+                            <form id={`delete-form-${item.id}`} onSubmit={handleDelete} method="POST">
+                                <button disabled={disabled} type="submit" className="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
                             </form>
                         </div>
                     </div>
