@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "../App";
 import axios from "axios";
 
-export default function ContactCard({ item }) {
+export default function ContactCard({ item, refreshHandler }) {
     const { user, stateToken } = useContext(AppContext);
     const [disable, setDisable] = useState(false);
 
@@ -18,7 +18,7 @@ export default function ContactCard({ item }) {
                 { headers }
             );
             console.log(response);
-            window.location.reload();
+            refreshHandler(true);
             // setSuccess("Laporan berhasil dikirim!")
             // resetForm();
         } catch {
@@ -52,7 +52,7 @@ export default function ContactCard({ item }) {
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                     <form id={`delete-form-${item.id}`} onSubmit={handleDelete}>
-                                        <button disabled={disable} type="submit" className="btn btn-danger">Hapus</button>
+                                        <button disabled={disable} type="submit" className="btn btn-danger" data-bs-dismiss="modal">Hapus</button>
                                     </form>
                                 </div>
                             </div>

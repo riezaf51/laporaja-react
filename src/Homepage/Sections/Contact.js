@@ -8,31 +8,39 @@ import axios from 'axios';
 import Loading from '../../Components/Loading';
 import ContactCard from '../../Components/ContactCard';
 import { AppContext } from '../../App';
+import NoData from '../../Components/NoData';
 
 export default function Contact() {
     const { user } = useContext(AppContext);
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
+    const [refresh, setRefresh] = useState(true);
+
+    const handleRefresh = (bool) => {
+        setRefresh(bool);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(API_URL + '/api/kontakpenting');
                 const jsonData = response.data
                 console.log(response.data);
                 setData(jsonData);
                 setSuccess(true);
-                setLoading(false); // Set loading to false on error as well
             } catch (error) {
                 console.error('Error fetching data: ' + error);
-                setLoading(false); // Set loading to false on error as well
                 // alert(error);
             }
+            setLoading(false);
+            setRefresh(false);
         };
-
-        fetchData();
-    }, []);
+        if (refresh) {
+            fetchData();
+        }
+    }, [refresh]);
 
     if (loading) {
         return (
@@ -78,7 +86,7 @@ export default function Contact() {
                         <div className="col">
                             {data.data
                                 .filter(item => (item.jenisinstansi === "Rumah Sakit"))
-                                .map(item => (<ContactCard item={item} />))
+                                .map(item => (<ContactCard item={item} refreshHandler={handleRefresh} />))
                             }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
@@ -87,7 +95,7 @@ export default function Contact() {
                         <div className="col">
                             {data.data
                                 .filter(item => (item.jenisinstansi === "Kantor Polisi"))
-                                .map(item => (<ContactCard item={item} />))
+                                .map(item => (<ContactCard item={item} refreshHandler={handleRefresh} />))
                             }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
@@ -96,7 +104,7 @@ export default function Contact() {
                         <div className="col">
                             {data.data
                                 .filter(item => (item.jenisinstansi === "Kantor Pemadam"))
-                                .map(item => (<ContactCard item={item} />))
+                                .map(item => (<ContactCard item={item} refreshHandler={handleRefresh} />))
                             }
                             {/* <!-- <h4><strong>{{$data->namainstansi}}</strong></h4>
                         <h6>{{$data->alamat}}</h6>
@@ -104,6 +112,9 @@ export default function Contact() {
                         </div>
                     </div>
                 </div>
+                {data.data.length === 0 &&
+                    <NoData padded={false} />
+                }
                 {user && user.role === 'admin' &&
                     <div className="plus col">
                         <li><Link to={routes.add}><i className="fa-solid fa-plus"></i>Tambah Nomer Penting</Link></li>
