@@ -1,31 +1,30 @@
-import './App.css';
-import HomeLayout from './Homepage/Layout';
-import ScrollToTop from './Components/ScrollToTop';
+import HomeLayout from './homepage/Layout';
+import ScrollToTop from './common/ScrollToTop';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { API_URL, routes } from './strings';
-import Login from './Auth/Login';
-import Register from './Auth/Register';
-import Contact from './Homepage/Sections/Contact';
-import EditContact from './Homepage/Sections/EditContact';
-import AddContact from './Homepage/Sections/AddContact';
-import Home from './Homepage/Sections/Home';
-import Forum from './Homepage/Sections/Forum';
-import Laporan from './Homepage/Sections/Laporan';
-import ProfileLayout from './Profiles/ProfileLayout';
-import Profile from './Profiles/Profile';
-import ProfileLaporan from './Profiles/ProfileLaporan';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import Contact from './homepage/Contact';
+import ContactFormEdit from './homepage/ContactFormEdit';
+import ContactFormAdd from './homepage/ContactFormAdd';
+import Home from './homepage/Home';
+import Forum from './homepage/Forum';
+import Laporan from './homepage/LaporanForm';
+import ProfileLayout from './profile/ProfileLayout';
+import Profile from './profile/Profile';
+import ProfileLaporan from './profile/ProfileLaporan';
 import { useEffect, useState } from 'react';
 import { createContext } from 'react';
-import ProtectedRoute from './Components/ProtectedRoute';
-import NotFound from './Components/NotFound';
+import ProtectedRoute from './middleware/ProtectedRoute';
+import NotFound from './common/NotFound';
 import axios from 'axios';
-import Loading from './Components/Loading';
-import RedirectIfAuthenticated from './Components/RedirectIfAuthenticated';
-import ServerInactive from './Components/ServerInactive';
-import ForumDetails from './Homepage/Sections/ForumDetails';
-import AdminRoute from './Components/AdminRoute';
-import ProfileEditLaporan from './Profiles/ProfileEditLaporan';
-import ProfileEdit from './Profiles/ProfileEdit';
+import Loading from './common/Loading';
+import RedirectIfAuthenticated from './middleware/RedirectIfAuthenticated';
+import ServerInactive from './common/ServerInactive';
+import ForumDetails from './homepage/ForumDetails';
+import AdminRoute from './middleware/AdminRoute';
+import ProfileEditLaporan from './profile/ProfileEditLaporan';
+import ProfileEdit from './profile/ProfileEdit';
 
 export const AppContext = createContext("");
 
@@ -98,8 +97,8 @@ export default function App() {
           <Route path={routes.dashboard} element={<HomeLayout />}>
             <Route path={routes.home} element={<Home />} />
             <Route path={routes.contact} element={<Contact />} />
-            <Route path={routes.contact + '/edit/:id'} element={<ProtectedRoute><EditContact /></ProtectedRoute>} />
-            <Route path={routes.contact + '/tambah'} element={<ProtectedRoute><AddContact /></ProtectedRoute>} />
+            <Route path={routes.contact + '/edit/:id'} element={<ProtectedRoute><ContactFormEdit /></ProtectedRoute>} />
+            <Route path={routes.contact + '/tambah'} element={<ProtectedRoute><ContactFormAdd /></ProtectedRoute>} />
             <Route path={routes.forum} element={<Forum />} />
             <Route path={routes.forum + '/:id'} element={<ForumDetails />} />
             <Route path={routes.laporan} element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
